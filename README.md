@@ -2,12 +2,12 @@ Merging [airsplay/py-bottom-up-attention](https://github.com/airsplay/py-bottom-
 since airsplay's py-bottom-up-attention was running on old detectron2.
 
 ## Test Environment
-'''BibTeX
+```BibTeX
 Ubuntu 16.04 LTS
 NVIDIA A100-PCIE-40GB
 CUDA Version: 11.0
 NVIDIA-Driver 450
-'''
+```
 
 ## Installation
 
