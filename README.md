@@ -18,7 +18,7 @@ See [INSTALL.md](INSTALL.md).
 
 Detectron2 is released under the [Apache 2.0 license](LICENSE).
 
-## Citing Detectron2
+## Citing
 
 If you use Detectron2 in your research or wish to refer to the baseline results published in the [Model Zoo](MODEL_ZOO.md), please use the following BibTeX entry.
 
