@@ -7,6 +7,7 @@ Ubuntu 16.04 LTS
 NVIDIA A100-PCIE-40GB
 CUDA Version: 11.0
 NVIDIA-Driver 450
+pytorch 1.7.1
 ```
 
 ## Installation
