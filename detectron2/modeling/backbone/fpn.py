@@ -15,7 +15,7 @@ __all__ = ["build_resnet_fpn_backbone", "build_retinanet_resnet_fpn_backbone", "
 
 class FPN(Backbone):
     """
-    This module implements :paper:`FPN`.
+    This module implements Feature Pyramid Network.
     It creates pyramid features built on top of some input feature maps.
     """
 
@@ -49,9 +49,8 @@ class FPN(Backbone):
         assert isinstance(bottom_up, Backbone)
 
         # Feature map strides and channels from the bottom up network (e.g. ResNet)
-        input_shapes = bottom_up.output_shape()
-        in_strides = [input_shapes[f].stride for f in in_features]
-        in_channels = [input_shapes[f].channels for f in in_features]
+        in_strides = [bottom_up.out_feature_strides[f] for f in in_features]
+        in_channels = [bottom_up.out_feature_channels[f] for f in in_features]
 
         _assert_strides_are_log2_contiguous(in_strides)
         lateral_convs = []
@@ -183,10 +182,10 @@ class LastLevelP6P7(nn.Module):
     C5 feature.
     """
 
-    def __init__(self, in_channels, out_channels, in_feature="res5"):
+    def __init__(self, in_channels, out_channels):
         super().__init__()
         self.num_levels = 2
-        self.in_feature = in_feature
+        self.in_feature = "res5"
         self.p6 = nn.Conv2d(in_channels, out_channels, 3, 2, 1)
         self.p7 = nn.Conv2d(out_channels, out_channels, 3, 2, 1)
         for module in [self.p6, self.p7]:
@@ -233,7 +232,7 @@ def build_retinanet_resnet_fpn_backbone(cfg, input_shape: ShapeSpec):
     bottom_up = build_resnet_backbone(cfg, input_shape)
     in_features = cfg.MODEL.FPN.IN_FEATURES
     out_channels = cfg.MODEL.FPN.OUT_CHANNELS
-    in_channels_p6p7 = bottom_up.output_shape()["res5"].channels
+    in_channels_p6p7 = bottom_up.out_feature_channels["res5"]
     backbone = FPN(
         bottom_up=bottom_up,
         in_features=in_features,
